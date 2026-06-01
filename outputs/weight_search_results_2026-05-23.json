@@ -1,0 +1,762 @@
+[
+  {
+    "config": {
+      "configId": "search_product_add_5",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.442,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 66
+  },
+  {
+    "config": {
+      "configId": "search_product_add_3",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.4306,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 64
+  },
+  {
+    "config": {
+      "configId": "search_product_add_17",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.4256,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 64
+  },
+  {
+    "config": {
+      "configId": "search_product_add_19",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.3671,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 274
+  },
+  {
+    "config": {
+      "configId": "search_product_add_39",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.4,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.349,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_35",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.4,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.344,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_23",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.3152,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_7",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.2873,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_37",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.4,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.2834,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_33",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.4,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.2793,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 289
+  },
+  {
+    "config": {
+      "configId": "search_product_add_21",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.2781,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_20",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.1283,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 132
+  },
+  {
+    "config": {
+      "configId": "search_product_add_34",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.4,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.0576,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 132
+  },
+  {
+    "config": {
+      "configId": "search_product_add_8",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 2.0192,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 183
+  },
+  {
+    "config": {
+      "configId": "search_product_add_22",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.9923,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 172
+  },
+  {
+    "config": {
+      "configId": "search_product_add_11",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.2,
+        "stability": 0,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.9327,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 255
+  },
+  {
+    "config": {
+      "configId": "search_product_add_40",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.4,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.9283,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_36",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.4,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.9233,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_24",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.918,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_31",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.2,
+        "stability": 0.1,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.908,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_27",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.2,
+        "stability": 0,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.903,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_15",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.2,
+        "stability": 0.1,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.8889,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_9",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.2,
+        "stability": 0,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.8746,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 58
+  },
+  {
+    "config": {
+      "configId": "search_product_add_38",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.4,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.8722,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_25",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.2,
+        "stability": 0,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.8473,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 254
+  },
+  {
+    "config": {
+      "configId": "search_product_add_29",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.2,
+        "stability": 0.1,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.8344,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_13",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.2,
+        "stability": 0.1,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.8309,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_4",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.8157,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 33
+  },
+  {
+    "config": {
+      "configId": "search_product_add_18",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.8157,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 33
+  },
+  {
+    "config": {
+      "configId": "search_product_add_6",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.1,
+        "stability": 0.1,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.8094,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 39
+  },
+  {
+    "config": {
+      "configId": "search_product_add_12",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.2,
+        "stability": 0,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.6646,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 141
+  },
+  {
+    "config": {
+      "configId": "search_product_add_26",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.2,
+        "stability": 0,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.5379,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 153
+  },
+  {
+    "config": {
+      "configId": "search_product_add_14",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.2,
+        "stability": 0.1,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.5283,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 224
+  },
+  {
+    "config": {
+      "configId": "search_product_add_32",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.2,
+        "stability": 0.1,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.5045,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_28",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.2,
+        "stability": 0,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.4995,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_16",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.2,
+        "stability": 0.1,
+        "growthSpace": 0.2,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.498,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_30",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.3,
+        "quality": 0.2,
+        "stability": 0.1,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.4448,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 300
+  },
+  {
+    "config": {
+      "configId": "search_product_add_10",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.2,
+        "stability": 0,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": 1.1121,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 31
+  },
+  {
+    "config": {
+      "configId": "search_product_add_1",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.2
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": -0.01,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 0
+  },
+  {
+    "config": {
+      "configId": "search_product_add_2",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": {
+        "contribution": 0.1,
+        "efficiency": 0.2,
+        "quality": 0.1,
+        "stability": 0,
+        "growthSpace": 0.1,
+        "riskPenalty": 0.35
+      },
+      "minSampleLevel": "medium"
+    },
+    "objectiveScore": -0.0175,
+    "reason": "Selected by future lift, precision@5, sample coverage, and weight-balance interpretability.",
+    "metricsSampleCount": 0
+  }
+]

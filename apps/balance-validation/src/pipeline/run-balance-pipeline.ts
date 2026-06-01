@@ -1,0 +1,33 @@
+import { mkdir, writeFile } from "node:fs/promises";
+import { generateSyntheticData } from "../../../../packages/balance-engine/src/synthetic-data.js";
+import { buildWideTables } from "../../../../packages/balance-engine/src/build-wide-tables.js";
+import { buildAllFeatureRows } from "../../../../packages/balance-engine/src/feature-builder.js";
+import { recommend } from "../../../../packages/balance-engine/src/scoring-engine.js";
+import { buildOutcomes } from "../../../../packages/balance-engine/src/outcome-builder.js";
+import { assertNoFutureLeakage, runBacktest } from "../../../../packages/balance-engine/src/backtest-engine.js";
+import { searchWeights, type WeightSearchSpace } from "../../../../packages/balance-engine/src/weight-search.js";
+import { renderShadowReport } from "../../../../packages/report-renderer/src/render-shadow-report.js";
+import { renderBacktestSummary } from "../../../../packages/report-renderer/src/render-backtest-summary.js";
+const outputDate = "2026-05-23";
+export async function runBalancePipeline() {
+  const data=generateSyntheticData(); const tables=buildWideTables(data); const features=buildAllFeatureRows(tables); assertNoFutureLeakage(features);
+  const recommendations=recommend(features).filter(r=>r.dt===outputDate || ["2026-05-20","2026-05-21","2026-05-22"].includes(r.dt));
+  const outcomes=[...(["1d","3d","7d"] as const).flatMap(h=>[...buildOutcomes(tables.rooms,"room",h),...buildOutcomes(tables.products,"product",h),...buildOutcomes(tables.carriers,"carrier",h),...buildOutcomes(tables.ads.filter(a=>a.entityType==="ad_account"),"ad_account",h),...buildOutcomes(tables.ads.filter(a=>a.entityType==="ad_material"),"ad_material",h)])];
+  const backtests=runBacktest(recommendations,outcomes);
+  const space:WeightSearchSpace={ entityType:"product", recommendationType:"add", maxConfigs:40, search:{ contribution:[.1,.2,.3], efficiency:[.2,.3,.4], quality:[.1,.2], stability:[0,.1], growthSpace:[.1,.2], riskPenalty:[.2,.35] } };
+  const weights=searchWeights(features.filter(f=>f.dt<="2026-05-20"),outcomes,space);
+  await mkdir("outputs",{recursive:true});
+  await mkdir("examples/synthetic-data",{recursive:true}); await mkdir("examples/sample-configs",{recursive:true});
+  await writeFile("examples/synthetic-data/room_daily.raw.json",JSON.stringify(data.roomRows.slice(0,200),null,2));
+  await writeFile("examples/synthetic-data/product_live.raw.json",JSON.stringify(data.productRows.slice(0,300),null,2));
+  await writeFile("examples/synthetic-data/carrier_daily.raw.json",JSON.stringify(data.carrierRows,null,2));
+  await writeFile("examples/synthetic-data/ad_material.raw.json",JSON.stringify(data.adRows.filter(r=>r.entityType==="ad_material").slice(0,300),null,2));
+  await writeFile("examples/sample-configs/scoring-weights.default.json",JSON.stringify({ generatedFrom:"packages/balance-engine/src/scoring-engine.ts" },null,2));
+  await writeFile("examples/sample-configs/weight-search-space.json",JSON.stringify(space,null,2));
+  await writeFile("examples/sample-configs/backtest.config.json",JSON.stringify({ horizons:["1d","3d","7d"], split:{ trainEnd:"2026-05-20", testStart:"2026-05-21" }},null,2));
+  await writeFile(`outputs/balance_recommendations_${outputDate}.json`,JSON.stringify(recommendations.filter(r=>r.dt===outputDate),null,2));
+  await writeFile(`outputs/balance_backtest_summary_${outputDate}.json`,JSON.stringify(renderBacktestSummary(backtests),null,2));
+  await writeFile(`outputs/weight_search_results_${outputDate}.json`,JSON.stringify(weights,null,2));
+  await writeFile(`outputs/balance_shadow_report_${outputDate}.md`,renderShadowReport(outputDate,recommendations,backtests,weights));
+  return { outputDate, recommendations:recommendations.filter(r=>r.dt===outputDate).length, backtests:backtests.length, weightConfigs:weights.length };
+}

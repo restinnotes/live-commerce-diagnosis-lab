@@ -1,0 +1,33 @@
+{
+  "entityType": "product",
+  "recommendationType": "add",
+  "maxConfigs": 40,
+  "search": {
+    "contribution": [
+      0.1,
+      0.2,
+      0.3
+    ],
+    "efficiency": [
+      0.2,
+      0.3,
+      0.4
+    ],
+    "quality": [
+      0.1,
+      0.2
+    ],
+    "stability": [
+      0,
+      0.1
+    ],
+    "growthSpace": [
+      0.1,
+      0.2
+    ],
+    "riskPenalty": [
+      0.2,
+      0.35
+    ]
+  }
+}
