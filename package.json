@@ -1,1 +1,23 @@
-{"name":"live-commerce-diagnosis-lab","version":"0.1.0","private":false,"type":"module","scripts":{"build":"tsc -p tsconfig.json","demo:balance":"tsx src/cli/demo-balance.ts","balance:backtest":"tsx src/cli/demo-balance.ts --backtest-only","test":"vitest run"},"dependencies":{"zod":"^3.23.8"},"devDependencies":{"@types/node":"^22.10.2","tsx":"^4.19.2","typescript":"^5.7.2","vitest":"^2.1.8"}}
+{
+  "name": "live-commerce-diagnosis-lab",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "demo:balance": "tsx apps/balance-validation/src/cli/demo-balance.ts",
+    "balance:build": "tsx apps/balance-validation/src/cli/build-features.ts",
+    "balance:backtest": "tsx apps/balance-validation/src/cli/run-backtest.ts",
+    "balance:report": "tsx apps/balance-validation/src/cli/generate-report.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
