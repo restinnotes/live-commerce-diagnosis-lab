@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { buildAllFeatureRows, assertNoFutureLeakage } from '../../../../packages/balance-engine/src/features.js';
+import { buildCanonicalWideTables } from '../../../../packages/balance-engine/src/canonical-wide-tables.js';
 import { buildOutcomes, generateSyntheticData } from '../../../../packages/balance-engine/src/synthetic-data.js';
 import { buildRecommendations } from '../../../../packages/balance-engine/src/scoring-engine.js';
 import { runBacktest } from '../../../../packages/balance-engine/src/backtest.js';
@@ -29,11 +30,14 @@ function readJson<T>(file: string): T {
 export function buildFeatures(paths: PipelinePaths): { features: FeatureRow[]; outcomesPath: string; featuresPath: string } {
   ensureOutDir(paths.outDir);
   const raw = generateSyntheticData();
-  const features = buildAllFeatureRows(raw);
+  const canonicalWideTables = buildCanonicalWideTables(raw);
+  const features = buildAllFeatureRows(canonicalWideTables);
   assertNoFutureLeakage(features);
   const outcomes = buildOutcomes(raw);
+  const widePath = path.join(paths.outDir, 'balance_canonical_wide_tables.json');
   const featuresPath = path.join(paths.outDir, 'balance_features.json');
   const outcomesPath = path.join(paths.outDir, 'balance_outcomes.json');
+  writeJson(widePath, canonicalWideTables);
   writeJson(featuresPath, features);
   writeJson(outcomesPath, outcomes);
   return { features, outcomesPath, featuresPath };

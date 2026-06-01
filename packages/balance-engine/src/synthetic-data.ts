@@ -1,4 +1,6 @@
-import type { MetricRow, OutcomeRow } from './types.js';
+import { buildCanonicalWideTables, type BalanceWideRow } from './canonical-wide-tables.js';
+import type { OutcomeRow } from '../../core/src/types.js';
+import type { MetricRow } from './types.js';
 
 function day(n: number): string {
   return `2026-01-${String(n).padStart(2, '0')}`;
@@ -6,7 +8,7 @@ function day(n: number): string {
 
 export function generateSyntheticData(): MetricRow[] {
   const rows: MetricRow[] = [];
-  const entityTypes = ['product', 'room', 'ad_material'] as const;
+  const entityTypes = ['product', 'room', 'ad_material', 'carrier'] as const;
   for (let d = 1; d <= 14; d += 1) {
     for (const entityType of entityTypes) {
       for (let i = 1; i <= 8; i += 1) {
@@ -25,7 +27,7 @@ export function generateSyntheticData(): MetricRow[] {
           cost,
           inventory: 100 - d - i,
           profit: Math.round(gmv * 0.18 - cost),
-          hasSkuMapping: entityType === 'product',
+          hasSkuMapping: entityType === 'product' || entityType === 'carrier',
           financePresent: d <= 13,
           adAttributionLevel: entityType === 'ad_material' ? 'material' : 'none'
         });
@@ -54,4 +56,8 @@ export function buildOutcomes(rows: MetricRow[], horizonDays = 3): OutcomeRow[] 
       futureRoi: futureCost === 0 ? 0 : futureGmv / futureCost
     };
   });
+}
+
+export function generateSyntheticCanonicalWideTables(): BalanceWideRow[] {
+  return buildCanonicalWideTables(generateSyntheticData());
 }

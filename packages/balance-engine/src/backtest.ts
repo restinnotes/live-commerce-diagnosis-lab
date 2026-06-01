@@ -1,4 +1,4 @@
-import type { BacktestResult, EntityType, OutcomeRow, Recommendation, RecommendationType } from './types.js';
+import type { BacktestResult, EntityType, OutcomeRow, Recommendation, RecommendationType } from '../../core/src/types.js';
 
 export function precisionAtK(labels: number[], k: number): number {
   const top = labels.slice(0, k);

@@ -1,14 +1,17 @@
 import { scoreFeature } from './scoring-engine.js';
 import { runBacktest } from './backtest.js';
-import type { EntityType, FeatureRow, OutcomeRow, RecommendationType, ScoreWeights, WeightConfig } from './types.js';
+import type { EntityType, FeatureRow, OutcomeRow, RecommendationType, ScoreWeights, WeightConfig } from '../../core/src/types.js';
 
 export const supportedSearchTargets: Array<{ entityType: EntityType; recommendationType: RecommendationType }> = [
   { entityType: 'product', recommendationType: 'add' },
+  { entityType: 'product', recommendationType: 'maintain' },
   { entityType: 'product', recommendationType: 'downrank' },
   { entityType: 'product', recommendationType: 'investigate' },
   { entityType: 'room', recommendationType: 'add' },
+  { entityType: 'room', recommendationType: 'maintain' },
   { entityType: 'room', recommendationType: 'downrank' },
   { entityType: 'ad_material', recommendationType: 'add' },
+  { entityType: 'ad_material', recommendationType: 'maintain' },
   { entityType: 'ad_material', recommendationType: 'downrank' },
   { entityType: 'carrier', recommendationType: 'watch' }
 ];
