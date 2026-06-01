@@ -10,12 +10,15 @@ export function dataQualityFor(row: MetricRow, rows: MetricRow[]): DataQuality {
   const financeUsable = financeCoverage >= 0.95;
   if (!financeUsable) issues.push('finance_discontinuous');
   if (row.exposure === 0 || row.cost === 0 || row.orders === 0) issues.push('zero_denominator');
+  const adMaterialRecommendationAllowed = row.adAttributionLevel === 'material' || row.adAttributionLevel === 'plan';
   const adPlanRecommendationAllowed = row.adAttributionLevel === 'plan';
+  if (row.entityType === 'ad_material' && !adMaterialRecommendationAllowed) issues.push('ad_attribution_missing');
   if (row.entityType === 'ad_material' && !adPlanRecommendationAllowed) issues.push('plan_attribution_missing');
   return {
     inventoryUsable: hasMapping,
     profitUsable: hasMapping && financeUsable,
     financeUsable,
+    adMaterialRecommendationAllowed,
     adPlanRecommendationAllowed,
     issues
   };
@@ -55,7 +58,8 @@ export function buildFeatureRowsAsOf(rows: MetricRow[], asOfDate: string): Featu
         quality: percentileRank(qualityValue, cohort.map((candidate) => 1 - (safeDivide(candidate.refunds, candidate.orders) ?? 1))),
         stability: 1 - percentileRank(Math.abs(row.refunds - 1), cohort.map((candidate) => Math.abs(candidate.refunds - 1))),
         growthSpace: 1 - percentileRank(row.exposure, cohort.map((candidate) => candidate.exposure)),
-        riskPenalty: percentileRank(refundRate ?? 1, cohort.map((candidate) => safeDivide(candidate.refunds, candidate.orders) ?? 1))
+        riskPenalty: percentileRank(refundRate ?? 1, cohort.map((candidate) => safeDivide(candidate.refunds, candidate.orders) ?? 1)),
+        costRisk: percentileRank(row.cost, cohort.map((candidate) => candidate.cost))
       },
       dataQuality
     };

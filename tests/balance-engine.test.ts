@@ -43,12 +43,15 @@ describe('as-of feature construction and data-quality guards', () => {
     expect(feature!.metrics.profit).toBeUndefined();
   });
 
-  it('missing ad attribution prevents plan-level add recommendation', () => {
-    const [feature] = buildFeatureRowsAsOf([
+  it('material ad attribution allows material-level add shadow recommendation but missing attribution does not', () => {
+    const [materialFeature] = buildFeatureRowsAsOf([
       { dt: '2026-01-01', entityType: 'ad_material', entityId: 'm1', exposure: 100, gmv: 200, orders: 10, refunds: 1, cost: 50, hasSkuMapping: false, financePresent: true, adAttributionLevel: 'material' }
     ], '2026-01-01');
-    const recommendations = buildRecommendations([feature!], defaultWeightConfig);
-    expect(recommendations.some((row) => row.recommendationType === 'add')).toBe(false);
+    const [missingFeature] = buildFeatureRowsAsOf([
+      { dt: '2026-01-01', entityType: 'ad_material', entityId: 'm2', exposure: 100, gmv: 200, orders: 10, refunds: 1, cost: 50, hasSkuMapping: false, financePresent: true, adAttributionLevel: 'none' }
+    ], '2026-01-01');
+    expect(buildRecommendations([materialFeature!], defaultWeightConfig).some((row) => row.recommendationType === 'add')).toBe(true);
+    expect(buildRecommendations([missingFeature!], defaultWeightConfig).some((row) => row.recommendationType === 'add')).toBe(false);
   });
 
   it('zero denominator creates dataQuality issue and no NaN/Infinity', () => {
@@ -66,6 +69,54 @@ describe('as-of feature construction and data-quality guards', () => {
     ], '2026-01-01');
     expect(scoreFeature(feature!, 'add', defaultWeightConfig).strength).not.toBe('strong');
     expect(scoreFeature(feature!, 'downrank', defaultWeightConfig).strength).not.toBe('strong');
+  });
+
+
+
+  it('objective-specific scoring rewards high ROI low refund objects for add, not downrank', () => {
+    const features = buildFeatureRowsAsOf([
+      { dt: '2026-01-01', entityType: 'product', entityId: 'winner', exposure: 80, gmv: 800, orders: 20, refunds: 0, cost: 80, hasSkuMapping: true, financePresent: true },
+      { dt: '2026-01-01', entityType: 'product', entityId: 'baseline', exposure: 80, gmv: 160, orders: 10, refunds: 4, cost: 100, hasSkuMapping: true, financePresent: true }
+    ], '2026-01-01');
+    const winner = features.find((feature) => feature.entityId === 'winner')!;
+    const add = scoreFeature(winner, 'add', defaultWeightConfig);
+    const downrank = scoreFeature(winner, 'downrank', defaultWeightConfig);
+    expect(add.score).toBeGreaterThan(downrank.score);
+    expect(downrank.strength).not.toBe('strong');
+  });
+
+  it('objective-specific scoring rewards low ROI high refund objects for downrank/investigate, not add', () => {
+    const features = buildFeatureRowsAsOf([
+      { dt: '2026-01-01', entityType: 'product', entityId: 'bad', exposure: 120, gmv: 80, orders: 10, refunds: 6, cost: 240, hasSkuMapping: true, financePresent: true },
+      { dt: '2026-01-01', entityType: 'product', entityId: 'good', exposure: 120, gmv: 900, orders: 30, refunds: 0, cost: 90, hasSkuMapping: true, financePresent: true }
+    ], '2026-01-01');
+    const bad = features.find((feature) => feature.entityId === 'bad')!;
+    const add = scoreFeature(bad, 'add', defaultWeightConfig);
+    const downrank = scoreFeature(bad, 'downrank', defaultWeightConfig);
+    const investigate = scoreFeature(bad, 'investigate', defaultWeightConfig);
+    expect(downrank.score).toBeGreaterThan(add.score);
+    expect(investigate.score).toBeGreaterThan(add.score);
+  });
+
+  it('high GMV high refund objects score as investigate instead of direct add', () => {
+    const features = buildFeatureRowsAsOf([
+      { dt: '2026-01-01', entityType: 'product', entityId: 'riskyStar', exposure: 300, gmv: 1200, orders: 30, refunds: 12, cost: 140, hasSkuMapping: true, financePresent: true },
+      { dt: '2026-01-01', entityType: 'product', entityId: 'cleanStar', exposure: 300, gmv: 900, orders: 30, refunds: 0, cost: 120, hasSkuMapping: true, financePresent: true }
+    ], '2026-01-01');
+    const riskyStar = features.find((feature) => feature.entityId === 'riskyStar')!;
+    const add = scoreFeature(riskyStar, 'add', defaultWeightConfig);
+    const investigate = scoreFeature(riskyStar, 'investigate', defaultWeightConfig);
+    expect(investigate.score).toBeGreaterThan(add.score);
+    expect(investigate.evidence.join(' ')).toContain('review rather than automatic add/downrank');
+  });
+
+  it('sample too small is watchable or weak, not strong add/downrank', () => {
+    const [feature] = buildFeatureRowsAsOf([
+      { dt: '2026-01-01', entityType: 'product', entityId: 'tiny', exposure: 10, gmv: 1000, orders: 9, refunds: 0, cost: 1, hasSkuMapping: true, financePresent: true }
+    ], '2026-01-01');
+    expect(scoreFeature(feature!, 'add', defaultWeightConfig).strength).toBe('weak');
+    expect(scoreFeature(feature!, 'downrank', defaultWeightConfig).strength).toBe('weak');
+    expect(scoreFeature(feature!, 'watch', defaultWeightConfig).scoreBreakdown).toHaveProperty('sampleInsufficient');
   });
 
   it('recommendation contains evidence, scoreBreakdown, dataQuality, and configId', () => {

@@ -22,6 +22,7 @@ export interface DataQuality {
   inventoryUsable: boolean;
   profitUsable: boolean;
   financeUsable: boolean;
+  adMaterialRecommendationAllowed: boolean;
   adPlanRecommendationAllowed: boolean;
   issues: string[];
 }
@@ -51,6 +52,7 @@ export interface FeatureRow {
     stability: number;
     growthSpace: number;
     riskPenalty: number;
+    costRisk: number;
   };
   dataQuality: DataQuality;
 }
