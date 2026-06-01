@@ -1,0 +1,19 @@
+{
+  "configId": "default-v0",
+  "product": {
+    "add": { "weights": { "contribution": 0.2, "efficiency": 0.3, "quality": 0.2, "stability": 0.1, "growthSpace": 0.2, "riskPenalty": 0.3 } },
+    "downrank": { "weights": { "contribution": 0.2, "efficiency": 0.2, "quality": 0.2, "stability": 0.1, "growthSpace": 0.2, "riskPenalty": 0.4 } },
+    "investigate": { "weights": { "contribution": 0.2, "efficiency": 0.3, "quality": 0.3, "stability": 0.1, "growthSpace": 0.2, "riskPenalty": 0.4 } }
+  },
+  "room": {
+    "add": { "weights": { "contribution": 0.2, "efficiency": 0.3, "quality": 0.2, "stability": 0.1, "growthSpace": 0.2, "riskPenalty": 0.3 } },
+    "downrank": { "weights": { "contribution": 0.2, "efficiency": 0.3, "quality": 0.2, "stability": 0.1, "growthSpace": 0.2, "riskPenalty": 0.4 } }
+  },
+  "ad_material": {
+    "add": { "weights": { "contribution": 0.2, "efficiency": 0.35, "quality": 0.2, "stability": 0.1, "growthSpace": 0.2, "riskPenalty": 0.3 } },
+    "downrank": { "weights": { "contribution": 0.2, "efficiency": 0.3, "quality": 0.2, "stability": 0.1, "growthSpace": 0.2, "riskPenalty": 0.45 } }
+  },
+  "carrier": {
+    "watch": { "weights": { "contribution": 0.2, "efficiency": 0.3, "quality": 0.2, "stability": 0.25, "growthSpace": 0.2, "riskPenalty": 0.4 } }
+  }
+}
