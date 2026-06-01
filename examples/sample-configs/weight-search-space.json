@@ -1,33 +1,25 @@
 {
-  "entityType": "product",
-  "recommendationType": "add",
-  "maxConfigs": 40,
-  "search": {
-    "contribution": [
-      0.1,
-      0.2,
-      0.3
-    ],
-    "efficiency": [
-      0.2,
-      0.3,
-      0.4
-    ],
-    "quality": [
-      0.1,
-      0.2
-    ],
-    "stability": [
-      0,
-      0.1
-    ],
-    "growthSpace": [
-      0.1,
-      0.2
-    ],
-    "riskPenalty": [
-      0.2,
-      0.35
-    ]
+  "supportedObjectives": [
+    "product/add",
+    "product/downrank",
+    "product/investigate",
+    "room/add",
+    "room/downrank",
+    "ad_material/add",
+    "ad_material/downrank",
+    "carrier/watch"
+  ],
+  "demoRun": {
+    "entityType": "product",
+    "recommendationType": "add",
+    "maxConfigs": 40,
+    "search": {
+      "contribution": [0.1, 0.2, 0.3],
+      "efficiency": [0.2, 0.3, 0.4],
+      "quality": [0.1, 0.2],
+      "stability": [0, 0.1],
+      "growthSpace": [0.1, 0.2],
+      "riskPenalty": [0.2, 0.35]
+    }
   }
 }

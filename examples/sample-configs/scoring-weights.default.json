@@ -1,3 +1,32 @@
 {
-  "generatedFrom": "packages/balance-engine/src/scoring-engine.ts"
+  "configs": [
+    {
+      "configId": "product_add_default",
+      "entityType": "product",
+      "recommendationType": "add",
+      "weights": { "contribution": 0.15, "efficiency": 0.3, "quality": 0.25, "stability": 0.1, "growthSpace": 0.2, "riskPenalty": 0.35 },
+      "minSampleLevel": "low"
+    },
+    {
+      "configId": "product_downrank_default",
+      "entityType": "product",
+      "recommendationType": "downrank",
+      "weights": { "contribution": 0.1, "efficiency": 0.35, "quality": 0.25, "stability": 0, "growthSpace": 0, "riskPenalty": 0.45 },
+      "minSampleLevel": "low"
+    },
+    {
+      "configId": "product_investigate_default",
+      "entityType": "product",
+      "recommendationType": "investigate",
+      "weights": { "contribution": 0.25, "efficiency": 0.1, "quality": 0.25, "stability": 0, "growthSpace": 0.1, "riskPenalty": 0.55 },
+      "minSampleLevel": "low"
+    },
+    {
+      "configId": "ad_material_add_default",
+      "entityType": "ad_material",
+      "recommendationType": "add",
+      "weights": { "contribution": 0.1, "efficiency": 0.45, "quality": 0.15, "stability": 0.1, "growthSpace": 0.2, "riskPenalty": 0.25 },
+      "minSampleLevel": "low"
+    }
+  ]
 }

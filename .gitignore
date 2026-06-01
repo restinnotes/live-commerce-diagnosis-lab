@@ -1,3 +1,28 @@
 node_modules/
 dist/
 .DS_Store
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Runtime/generated artifacts
+outputs/
+data/
+raw/
+logs/
+coverage/
+playwright-report/
+test-results/
+screenshots/
+*.log
+*.trace
+*.zip
+*.xlsx
+*.xls
+*.csv
+
+# Local tool caches
+.vite/
+.vitest/

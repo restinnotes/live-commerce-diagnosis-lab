@@ -1,0 +1,11 @@
+{
+  "description": "Small public-safe synthetic fixture. Demo data is generated in code; runtime outputs are ignored.",
+  "roomRows": [
+    { "dt": "2026-05-01", "roomId": "room_demo_1", "payAmt": 1000, "netPayAmt": 940, "orderCnt": 20, "payUserCnt": 18, "cost": 200, "refundAmt": 60 },
+    { "dt": "2026-05-01", "roomId": "room_demo_2", "payAmt": 600, "netPayAmt": 420, "orderCnt": 12, "payUserCnt": 11, "cost": 420, "refundAmt": 180 }
+  ],
+  "productRows": [
+    { "dt": "2026-05-01", "roomId": "room_demo_1", "productId": "product_demo_1", "productExposure": 200, "productClick": 50, "productPayAmt": 500, "productNetPayAmt": 480, "productOrderCnt": 10, "productPayUserCnt": 9, "productRefundAmt": 20, "skuId": "sku_demo_1" },
+    { "dt": "2026-05-01", "roomId": "room_demo_1", "productId": "product_demo_2", "productExposure": 300, "productClick": 90, "productPayAmt": 250, "productNetPayAmt": 150, "productOrderCnt": 5, "productPayUserCnt": 5, "productRefundAmt": 100, "skuId": null }
+  ]
+}

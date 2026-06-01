@@ -1,12 +1,107 @@
 import type { AdBalanceRow, CarrierDailyBalanceRow, ProductLiveBalanceRow, RoomDailyBalanceRow } from "../../core/src/types.js";
 import { safeDivide } from "../../core/src/math.js";
 import { addIssue, createDataQuality } from "../../core/src/data-quality.js";
-export function buildRoomDailyBalance(rows:any[]): RoomDailyBalanceRow[] { return rows.map((r)=>{ const dq=createDataQuality(r.orderCnt??0); const ratio=safeDivide(r.payAmt, r.cost); if (ratio===null) addIssue(dq,"zero_denominator","cost is zero; GMV-cost ratio unavailable","warning","cost"); return { ...r, refundRate:safeDivide(r.refundAmt,r.payAmt)??0, gmvCostRatio:ratio, dataQuality:dq }; }); }
-export function buildProductLiveBalance(rows:any[]): ProductLiveBalanceRow[] {
-  const roomTotals = new Map<string, { exposure:number; pay:number }>();
-  for (const r of rows) { const k=`${r.dt}|${r.roomId}`; const v=roomTotals.get(k)??{exposure:0,pay:0}; v.exposure+=r.productExposure; v.pay+=r.productPayAmt; roomTotals.set(k,v); }
-  return rows.map((r)=>{ const dq=createDataQuality(r.productOrderCnt??0); const ctr=safeDivide(r.productClick,r.productExposure); const deal=safeDivide(r.productOrderCnt,r.productClick); if (ctr===null) addIssue(dq,"zero_denominator","product exposure is zero; CTR unavailable","warning","productExposure"); if (!r.skuId) addIssue(dq,"mapping_missing","product-to-SKU mapping missing; inventory/profit excluded","warning","skuId"); if ((r.productOrderCnt??0)<3) addIssue(dq,"sample_too_small","sample too small for strong recommendations","warning","productOrderCnt"); const total=roomTotals.get(`${r.dt}|${r.roomId}`)!; return { ...r, productCtr:ctr, productClickDealRate:deal, productRefundRate:safeDivide(r.productRefundAmt,r.productPayAmt), exposureShareInRoom:safeDivide(r.productExposure,total.exposure), payShareInRoom:safeDivide(r.productPayAmt,total.pay), dataQuality:dq }; });
+
+export function buildRoomDailyBalance(rows: any[]): RoomDailyBalanceRow[] {
+  return rows.map((r) => {
+    const dq = createDataQuality(r.orderCnt ?? 0);
+    const ratio = safeDivide(r.payAmt, r.cost);
+    if (ratio === null) addIssue(dq, "zero_denominator", "cost is zero; GMV-cost ratio unavailable", "warning", "cost");
+    if (r.financeCoveragePct !== undefined && r.financeCoveragePct < 0.8) {
+      addIssue(dq, "finance_discontinuous", "finance coverage is below configured threshold; finance/profit features excluded", "warning", "financeCoveragePct");
+    }
+    return { ...r, refundRate: safeDivide(r.refundAmt, r.payAmt) ?? 0, gmvCostRatio: ratio, dataQuality: dq };
+  });
 }
-export function buildCarrierDailyBalance(rows:any[]): CarrierDailyBalanceRow[] { const totals=new Map<string,{pay:number;net:number}>(); for (const r of rows){ const v=totals.get(r.dt)??{pay:0,net:0}; v.pay+=r.payAmt; v.net+=r.netPayAmt; totals.set(r.dt,v); } return rows.map((r)=>{ const t=totals.get(r.dt)!; const dq=createDataQuality(r.orderCnt??0); return { ...r, refundRate:safeDivide(r.refundAmt??0,r.payAmt), contributionShare:safeDivide(r.payAmt,t.pay), netContributionShare:safeDivide(r.netPayAmt,t.net), dataQuality:dq }; }); }
-export function buildAdBalance(rows:any[]): AdBalanceRow[] { return rows.map((r)=>{ const dq=createDataQuality(r.paidOrderCnt??0); if (!r.planId || !r.campaignId || !r.attributionWindow) addIssue(dq,"ad_attribution_missing","plan/campaign/attribution window unavailable; no plan-level optimization","warning"); const roi=safeDivide(r.paidGmv??0,r.cost); if (roi===null) addIssue(dq,"zero_denominator","ad cost is zero; ROI unavailable","warning","cost"); return { ...r, overallPaymentRoi:roi, planId:null, campaignId:null, attributionWindow:null, dataQuality:dq }; }); }
-export function buildWideTables(data:{roomRows:any[];productRows:any[];carrierRows:any[];adRows:any[]}) { return { rooms: buildRoomDailyBalance(data.roomRows), products: buildProductLiveBalance(data.productRows), carriers: buildCarrierDailyBalance(data.carrierRows), ads: buildAdBalance(data.adRows) }; }
+
+export function buildProductLiveBalance(rows: any[]): ProductLiveBalanceRow[] {
+  const roomTotals = new Map<string, { exposure: number; pay: number }>();
+  for (const r of rows) {
+    const k = `${r.dt}|${r.roomId}`;
+    const v = roomTotals.get(k) ?? { exposure: 0, pay: 0 };
+    v.exposure += r.productExposure;
+    v.pay += r.productPayAmt;
+    roomTotals.set(k, v);
+  }
+
+  return rows.map((r) => {
+    const dq = createDataQuality(r.productOrderCnt ?? 0);
+    const ctr = safeDivide(r.productClick, r.productExposure);
+    const deal = safeDivide(r.productOrderCnt, r.productClick);
+    if (ctr === null) addIssue(dq, "zero_denominator", "product exposure is zero; CTR unavailable", "warning", "productExposure");
+    if (!r.skuId) addIssue(dq, "mapping_missing", "product-to-SKU mapping missing; inventory/profit excluded", "warning", "skuId");
+    if (r.financeCoveragePct !== undefined && r.financeCoveragePct < 0.8) {
+      addIssue(dq, "finance_discontinuous", "finance coverage is below configured threshold; finance/profit features excluded", "warning", "financeCoveragePct");
+    }
+    if ((r.productOrderCnt ?? 0) < 3) addIssue(dq, "sample_too_small", "sample too small for strong recommendations", "warning", "productOrderCnt");
+    const total = roomTotals.get(`${r.dt}|${r.roomId}`)!;
+    return {
+      ...r,
+      productCtr: ctr,
+      productClickDealRate: deal,
+      productRefundRate: safeDivide(r.productRefundAmt, r.productPayAmt),
+      exposureShareInRoom: safeDivide(r.productExposure, total.exposure),
+      payShareInRoom: safeDivide(r.productPayAmt, total.pay),
+      dataQuality: dq,
+    };
+  });
+}
+
+export function buildCarrierDailyBalance(rows: any[]): CarrierDailyBalanceRow[] {
+  const totals = new Map<string, { pay: number; net: number }>();
+  for (const r of rows) {
+    const v = totals.get(r.dt) ?? { pay: 0, net: 0 };
+    v.pay += r.payAmt;
+    v.net += r.netPayAmt;
+    totals.set(r.dt, v);
+  }
+  return rows.map((r) => {
+    const t = totals.get(r.dt)!;
+    const dq = createDataQuality(r.orderCnt ?? 0);
+    return {
+      ...r,
+      refundRate: safeDivide(r.refundAmt ?? 0, r.payAmt),
+      contributionShare: safeDivide(r.payAmt, t.pay),
+      netContributionShare: safeDivide(r.netPayAmt, t.net),
+      dataQuality: dq,
+    };
+  });
+}
+
+export function buildAdBalance(rows: any[]): AdBalanceRow[] {
+  const byDate = new Map<string, any[]>();
+  for (const row of rows) byDate.set(row.dt, [...(byDate.get(row.dt) ?? []), row]);
+
+  return rows.map((r) => {
+    const dq = createDataQuality(r.paidOrderCnt ?? 0);
+    const roi = safeDivide(r.paidGmv ?? 0, r.cost);
+    if (roi === null) addIssue(dq, "zero_denominator", "ad cost is zero; ROI unavailable", "warning", "cost");
+
+    if (r.entityType === "ad_material") {
+      dq.adAttributionLevel = "material";
+      dq.adAttributionUsable = true;
+    } else {
+      dq.adAttributionLevel = "account";
+      dq.adAttributionUsable = true;
+    }
+    if (r.planId && r.campaignId && r.attributionWindow) dq.adAttributionLevel = "plan";
+    if (r.entityType === "ad_material" && r.materialAttributionAvailable === false) {
+      addIssue(dq, "ad_attribution_missing", "material attribution unavailable; suppress material-level add recommendations", "warning");
+    } else if (!r.planId || !r.campaignId || !r.attributionWindow) {
+      dq.issues.push({ code: "ad_attribution_missing", severity: "info", message: "plan/campaign/attribution window unavailable; no plan-level budget optimization" });
+    }
+
+    const dateRows = byDate.get(r.dt) ?? [];
+    const totalCost = dateRows.reduce((sum, row) => sum + (row.cost ?? 0), 0);
+    return { ...r, overallPaymentRoi: roi, costShare: safeDivide(r.cost, totalCost), planId: null, campaignId: null, attributionWindow: null, dataQuality: dq };
+  });
+}
+
+export function buildWideTables(data: { roomRows: any[]; productRows: any[]; carrierRows: any[]; adRows: any[] }) {
+  return {
+    rooms: buildRoomDailyBalance(data.roomRows),
+    products: buildProductLiveBalance(data.productRows),
+    carriers: buildCarrierDailyBalance(data.carrierRows),
+    ads: buildAdBalance(data.adRows),
+  };
+}
