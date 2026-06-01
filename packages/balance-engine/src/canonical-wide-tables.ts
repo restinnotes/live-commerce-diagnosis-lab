@@ -53,11 +53,11 @@ export interface AdAccountMaterialBalance extends CanonicalWideBalanceRow {
 
 export type BalanceWideRow = RoomDailyBalance | ProductLiveBalance | CarrierDailyBalance | AdAccountMaterialBalance;
 
-function qualityFromRaw(row: MetricRow, rows: MetricRow[]): DataQuality {
+function qualityFromRaw(row: MetricRow, historyRows: MetricRow[]): DataQuality {
   const issues: string[] = [];
   const hasMapping = row.hasSkuMapping === true;
   if (!hasMapping) issues.push('mapping_missing');
-  const entityRows = rows.filter((candidate) => candidate.entityType === row.entityType && candidate.entityId === row.entityId);
+  const entityRows = historyRows.filter((candidate) => candidate.entityType === row.entityType && candidate.entityId === row.entityId && candidate.dt <= row.dt);
   const financeCoverage = entityRows.length === 0 ? 0 : entityRows.filter((candidate) => candidate.financePresent).length / entityRows.length;
   const financeUsable = financeCoverage >= 0.95;
   if (!financeUsable) issues.push('finance_discontinuous');
@@ -76,8 +76,8 @@ function qualityFromRaw(row: MetricRow, rows: MetricRow[]): DataQuality {
   };
 }
 
-function baseWideRow(row: MetricRow, rows: MetricRow[]): Omit<CanonicalWideBalanceRow, 'tableName'> {
-  const dataQuality = qualityFromRaw(row, rows);
+function baseWideRow(row: MetricRow, historyRows: MetricRow[]): Omit<CanonicalWideBalanceRow, 'tableName'> {
+  const dataQuality = qualityFromRaw(row, historyRows);
   return {
     dt: row.dt,
     entityType: row.entityType,

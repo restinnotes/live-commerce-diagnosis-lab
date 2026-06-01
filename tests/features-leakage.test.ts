@@ -24,6 +24,25 @@ describe('canonical wide tables and feature leakage', () => {
     expect(() => assertNoFutureLeakage([{ ...features[0]!, sourceDate: '2026-12-31' }])).toThrow(/future leakage/);
   });
 
+  it('does not let future finance coverage change historical data quality', () => {
+    const dayOneRows = [
+      { dt: '2026-01-01', entityType: 'product', entityId: 'stable_product', exposure: 100, gmv: 500, orders: 10, refunds: 0, cost: 50, hasSkuMapping: true, financePresent: true }
+    ] as const;
+    const futureRows = [
+      ...dayOneRows,
+      { dt: '2026-01-02', entityType: 'product', entityId: 'stable_product', exposure: 110, gmv: 520, orders: 11, refunds: 0, cost: 52, hasSkuMapping: true, financePresent: false },
+      { dt: '2026-01-03', entityType: 'product', entityId: 'stable_product', exposure: 120, gmv: 540, orders: 12, refunds: 0, cost: 54, hasSkuMapping: true, financePresent: false }
+    ] as const;
+
+    const [dayOneFeatureBeforeFutureRows] = buildFeatureRowsAsOf(buildCanonicalWideTables([...dayOneRows]), '2026-01-01');
+    const [dayOneFeatureAfterFutureRows] = buildFeatureRowsAsOf(buildCanonicalWideTables([...futureRows]), '2026-01-01');
+
+    expect(dayOneFeatureBeforeFutureRows!.dataQuality.financeUsable).toBe(true);
+    expect(dayOneFeatureBeforeFutureRows!.dataQuality.issues).not.toContain('finance_discontinuous');
+    expect(dayOneFeatureAfterFutureRows!.dataQuality.financeUsable).toBe(dayOneFeatureBeforeFutureRows!.dataQuality.financeUsable);
+    expect(dayOneFeatureAfterFutureRows!.dataQuality.issues).toEqual(dayOneFeatureBeforeFutureRows!.dataQuality.issues);
+  });
+
   it('uses only as-of cohort values for percentile ranks', () => {
     const wideRows = buildCanonicalWideTables(generateSyntheticData());
     const dayOne = buildFeatureRowsAsOf(wideRows, '2026-01-01');
