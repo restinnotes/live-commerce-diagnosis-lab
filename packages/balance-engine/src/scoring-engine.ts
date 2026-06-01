@@ -1,13 +1,8 @@
 import { weightsFor } from './config.js';
-import type { FeatureRow, Recommendation, RecommendationType, Strength, WeightConfig } from './types.js';
+import { clamp01 } from '../../core/src/math.js';
+import { dataQualitySeverity } from '../../core/src/data-quality.js';
+import type { FeatureRow, Recommendation, RecommendationType, Strength, WeightConfig } from '../../core/src/types.js';
 
-function clamp01(value: number): number {
-  return Math.max(0, Math.min(1, value));
-}
-
-function dataQualitySeverity(feature: FeatureRow): number {
-  return clamp01(feature.dataQuality.issues.length / 4);
-}
 
 function costConsumptionRisk(feature: FeatureRow): number {
   const lowRoiProxy = 1 - feature.ranks.efficiency;
@@ -26,7 +21,7 @@ function objectiveBreakdown(feature: FeatureRow, recommendationType: Recommendat
   const weights = weightsFor(config, feature.entityType, recommendationType);
   const lowEfficiency = 1 - feature.ranks.efficiency;
   const lowQuality = 1 - feature.ranks.quality;
-  const issueSeverity = dataQualitySeverity(feature);
+  const issueSeverity = dataQualitySeverity(feature.dataQuality);
   const costRisk = costConsumptionRisk(feature);
   const highContributionHighRisk = feature.ranks.contribution * feature.ranks.riskPenalty;
   const sampleInsufficient = feature.sampleSize < 30 ? 1 : 0;
@@ -41,6 +36,15 @@ function objectiveBreakdown(feature: FeatureRow, recommendationType: Recommendat
         stability: feature.ranks.stability * weights.stability,
         growthSpace: feature.ranks.growthSpace * weights.growthSpace,
         riskPenalty: -feature.ranks.riskPenalty * weights.riskPenalty
+      };
+    case 'maintain':
+      return {
+        contribution: feature.ranks.contribution * weights.contribution,
+        efficiency: feature.ranks.efficiency * weights.efficiency,
+        quality: feature.ranks.quality * weights.quality,
+        stability: feature.ranks.stability * weights.stability,
+        lowRisk: (1 - feature.ranks.riskPenalty) * weights.riskPenalty,
+        dataCompletenessPenalty: -issueSeverity * weights.growthSpace
       };
     case 'downrank':
       return {
@@ -79,6 +83,8 @@ function evidenceFor(feature: FeatureRow, recommendationType: RecommendationType
   switch (recommendationType) {
     case 'add':
       return [...base, 'objective=add rewards high contribution/efficiency/quality/growth space and penalizes risk'];
+    case 'maintain':
+      return [...base, 'objective=maintain preserves stable high-confidence entities with adequate contribution, efficiency, quality, and low risk'];
     case 'downrank':
       return [...base, 'objective=downrank is driven by risk, low efficiency, low quality, and cost-consumption risk; high contribution reduces confidence'];
     case 'investigate':
@@ -110,7 +116,7 @@ export function scoreFeature(feature: FeatureRow, recommendationType: Recommenda
 }
 
 export function buildRecommendations(features: FeatureRow[], config: WeightConfig): Recommendation[] {
-  const recommendationTypes: RecommendationType[] = ['add', 'downrank', 'investigate', 'watch'];
+  const recommendationTypes: RecommendationType[] = ['add', 'maintain', 'downrank', 'investigate', 'watch'];
   return features.flatMap((feature) => recommendationTypes
     .filter((type) => config[feature.entityType]?.[type])
     .map((type) => scoreFeature(feature, type, config))

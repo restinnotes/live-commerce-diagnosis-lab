@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import type { EntityType, RecommendationType, ScoreWeights, WeightConfig } from './types.js';
+import type { EntityType, RecommendationType, ScoreWeights, WeightConfig } from '../../core/src/types.js';
 
 export const defaultConfigId = 'default-v0';
 
@@ -16,15 +16,18 @@ export const defaultWeightConfig: WeightConfig = {
   configId: defaultConfigId,
   product: {
     add: { weights: defaultWeights },
+    maintain: { weights: { ...defaultWeights, stability: 0.2, riskPenalty: 0.35 } },
     downrank: { weights: { ...defaultWeights, efficiency: 0.2, riskPenalty: 0.4 } },
     investigate: { weights: { ...defaultWeights, quality: 0.3, riskPenalty: 0.4 } }
   },
   room: {
     add: { weights: defaultWeights },
+    maintain: { weights: { ...defaultWeights, stability: 0.2, riskPenalty: 0.35 } },
     downrank: { weights: { ...defaultWeights, riskPenalty: 0.4 } }
   },
   ad_material: {
     add: { weights: { ...defaultWeights, efficiency: 0.35 } },
+    maintain: { weights: { ...defaultWeights, efficiency: 0.35, stability: 0.2 } },
     downrank: { weights: { ...defaultWeights, riskPenalty: 0.45 } }
   },
   carrier: {
